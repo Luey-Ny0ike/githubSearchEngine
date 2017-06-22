@@ -26,7 +26,8 @@ Repos.prototype.getRepos = function() {
         } else {
           response[i].description =response[i].description
         }
-        $("#results").append("<li>"+response[i].name +"<br>" +response[i].description +"<br>" +response[i].created_at+"</li>");
+        $("#results").append("<li class='remove'>"+response[i].name +"<br>" +response[i].description +"<br>" +response[i].created_at+"</li>");
+
       }
     }).fail(function(error) {
 
@@ -46,6 +47,7 @@ $(document).ready(function() {
   var reposObject = new Repos();
   $("#search").click(function() {
     var name = $('#lookup').val();
+      $("li.remove").remove();
     lookupObject.getLookup(name);
     reposObject.getRepos(repos);
   });

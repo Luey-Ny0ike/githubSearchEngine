@@ -6,6 +6,7 @@ $(document).ready(function() {
   var reposObject = new Repos();
   $("#search").click(function() {
     var name = $('#lookup').val();
+      $("li.remove").remove();
     lookupObject.getLookup(name);
     reposObject.getRepos(repos);
   });
