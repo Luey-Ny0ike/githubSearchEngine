@@ -7,8 +7,8 @@ var apiKey = require('./../.env').apiKey;
 
 Lookup = function() {};
 Repos = function() {};
-
-Lookup.prototype.getLookup = function(name) {
+Lookup.prototype.getLookup = function() {
+  var name = $('#lookup').val();
   $.get('https://api.github.com/users/' + name + '?access_token=' + apiKey).then(function(response) {
     $(".place").text(response.name);
 
@@ -17,17 +17,19 @@ Lookup.prototype.getLookup = function(name) {
   });
 };
 
-Repos.prototype.getRepos = function(name, repos) {
-  $.get('https://api.github.com/users/' + repos + '/repos?access_token=' + apiKey).then(function(response) {
-
-      for (var i = 0; i < response.length + 1; i++) {
+Repos.prototype.getRepos = function() {
+    var name = $('#lookup').val();
+  $.get('https://api.github.com/users/' + name +  '/repos?access_token=' + apiKey).then(function(response) {
+      for (var i = 0; i < response.length; i++) {
         if (response[i].description === null) {
           response[i].description = 'No description in repo';
+        } else {
+          response[i].description =response[i].description
         }
-        Repos(response[i].name, response[i].description, response[i].created_at);
+        $("#results").append("<li>"+response[i].name +"<br>" +response[i].description +"<br>" +response[i].created_at+"</li>");
       }
     }).fail(function(error) {
-      //console.log(error.response.message);
+
       console.log("errorname");
     });
 
